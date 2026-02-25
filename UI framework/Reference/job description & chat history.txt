@@ -1,0 +1,1022 @@
+
+# job description
+We are seeking an experienced AWS Designer to integrate API, AWS Lambda, and DynamoDB to connect our application with Second Life using LSL scripting. The ideal candidate will have a deep understanding of AWS services and experience with scripting for Second Life. You will be responsible for designing and implementing a seamless connection, ensuring optimal performance and reliability. If you are passionate about innovative solutions and have a track record of successful integrations, we want to hear from you!
+
+---------------------------------
+
+# questions & answer
+- Integration scope: What actions should Second Life trigger (e.g., create/update users, assets, payments, stats)?
+- API requirements: Do you already have an API, or should it be designed from scratch?
+- Data model: What data needs to be stored in DynamoDB (users, items, transactions, states)?
+- Traffic expectations: Approximate number of concurrent users and request frequency.
+- Authentication & security: Any auth method planned (API keys, tokens, IP allowlist)?
+- Payment flow: Will Linden Dollar (L$) transactions be validated server-side?
+
+Ultimately we would like an online portal for this game as well as the option to bring the creatures into Second Life via a portal. And also a way to send the creatures back to a visual portal on a site (this is done in SL by a few breedables already they use images of the creatures online and then physical creatures in SL)
+
+We would need a system that creates a user from Second Life, so yes all Integrations listed above will be used.
+
+We have an API however it's probably not set up properly
+
+All items need to be stored in a Data Model and each item needs an UUID.
+
+We are planning to use a mailbox in second life to receive the items from all of the creatures (the mailbox will glow to show the creatures have dropped 1 of many things (see Milanote)
+
+The stats will be Munchiez (hunger), Age and Delivery (fervor) at this point and we will have a separate food that needs to be set up to keep the creatures fed. The creatures will live for 100 days. All Creatures be able to have a normal random delivery every 12 days.
+
+At the time of 100 days, the creatures will be blacked out (death) and need an option to send to the Great Beyond (for points) or a menu option to click so the creature turns into a Headstone or a Casket (collectible, tradeable, sellable or can also be sent to the Great Beyond (for points)
+
+We know very little about Authentication & security so we need a pro for this suggestion. As secure as possible of course 😉
+
+the Payment flow should yes be validated server side.
+
+---------------------------------
+
+# I've shared initial system architecture and client approved it
+
+---------------------------------
+
+# Confirming the requirement in detail
+
+link: https://docs.google.com/document/d/1zpbY4VkxQuma6HblFvVjsNp_iyKouwjgjuRnxn1viUc   (can you read the middle line in the link in detail? client selected one alternative and added middleline with rejecting. makse sense? you should take a look in detail)
+
+
+he wrote the this answer or opinion with "***". so focus on it for the clear requirement.
+
+```
+Goobiez Requirements
+
+1. Creature Lifecycle & Stats
+
+1.1 Munchiez (Hunger) System
+
+Current Setup:
+- Max: 100, Decrease: 10/day, Death at: 0
+
+A 10/day decrease means creatures die in 10 days if not fed. This might be too aggressive for casual players. I'd suggest 5/day (20 days without feeding) to give players more flexibility while still creating urgency.
+
+*** My thoughts were to  use 10 days because I would like the time to stop IF they pick it up and put it in their inventory. Is this possible?  So let’s say they go on vacation in real life and pick up all their Goobiez, when they return they can put them back down with no loss. I am not sure if this is possible? 
+
+When a Goobiez is picked up, LSL scripts stop running. We track "active time" on the server, so time only counts when the creature is rezzed in-world. Pick it up before vacation, put it back when you return - no time lost. This is standard for SL breedables.
+
+Ok great, for some reason a few breedables in SL don’t stop time and when we bring them out of inventory again they are sick and it makes people angry 
+
+- How much and how often should Munchiez be reduced? Should its action be based on SL time or real world time? 
+*** RL time if possible. 
+- Should there be a "critical hunger" warning at 20-30%? 
+*** Yes, 20%
+- Should Munchiez affect other stats (e.g., slower delivery when hungry)? 
+*** No
+
+ 
+1.2 Aging System
+
+Current Setup:
+- Max age: 100 days, then death
+
+100 days (~3.5 months) is a good lifespan for a breedable. It creates emotional attachment while encouraging ongoing engagement. Some games use 60-90  days.
+
+I just want to clarify whether its action should be based on SL time or real world time.
+*** to my knowledge SL time is 24 hrs just like RL time, it is just based on Pacific time.
+
+I think the sl day is much faster, with a standard cycle of 3 hours of daylight and 1 hour of night (4 hours total). Because a full day-night cycle passes in 4 hours, on real life day is equivalent to six days with in second life
+*** ok, use Real Life time please
+
+Yes sir. Then how about the Munchiez system?
+*** Real life time as well (the clocks in SL go by 24 hrs, what you might be seeing is the environment because that can be changed as anything in SL can be changed in world.
+
+
+1.3. Death & Afterlife
+
+- Great Beyond points formula: Based on age? or sth else? 
+*** Yes, please base on age, the  younger the less points, more points of course for longer feeding
+
+  - Headstone vs Casket: What's the difference in value/rarity? 
+*** they will be both the same, however, I would like an easy way to switch them out because all styles of headstones and caskets will be changing monthly
+
+*** more thoughts on this headstone/casket, since there will be many Goobiez & Fuggiez and tons of caskets/headstones, perhaps can we make it that when they send their Goobiez or Fuggiez to the great beyond there is a rare CHANCE of a headstone or casket and that it will be a random headstone or casket?
+
+- Can players resurrect creatures? 
+ *** Yes we will need a booster they can use to do this
+(Boosters we will need)
+Resurrect Booster
+Forever Booster
+
+***Another booster type item is a heart pedestal they can rez and attach 2 Goobiez to and it will increase their chance of having a Babiez (<-- decor type item) Altho I still want a Babiez to be possible without the pedestal so I would say the pedestal will increase the chance of a baby by 75%. But having a baby with regular breeding is maybe 10% (along with the mix of other things)? 
+
+- Should death reason affect rewards? (Old age = more points than starvation?) ***Yes
+- Can you please let me know how to calculate the point? 
+*** I think on a scale from 1-100, for old age and then with starvation cut the rewards in half.  So to keep it easier they get 1 point per day if they keep their Goobiez fed for 100 days. If they allow it to die they can still cash it in for 25 points, however if they allow it to starve, they will not have the option to turn it into a headstone/casket. But they can still send it to the great beyond for the 50 points.
+
+FYI,  how about adding a 24-48 hour grace period after death before forcing a decision? This gives players time to process and decide, especially for creatures they're attached to. 
+*** Is it possible to not have a forced decision? So that after death if they want to just pick it up they can and decide later? I want the decision for headstone, casket or great beyond to be a button they click and it will double check with them if they are sure they want to do this action.
+
+
+Dead creatures stay as-is until the owner decides. They can pick it up, think about it, and decide whenever they're ready. When they choose, a confirmation dialog asks "Are you sure?" before finalizing.
+
+
+ -Starvation Death + New Headstone Logic
+
+You confirmed earlier that creatures that die from starvation cannot be turned into a headstone/casket (only old age deaths can). But with the new random chance system (Question #2), when ANY creature is sent to the Great Beyond, there's a random chance of getting a headstone/casket.
+
+
+Question: If a creature died from starvation and is sent to the Great Beyond, do they:
+  - A) Have NO chance of random headstone/casket (starvation = no memorial at all)  
+*** Yes i would like them to have to resurrect them if they want a chance at a casket. I also would like them to be able to send them to the Great Beyond even if they are young and not old age.
+
+
+ - Death Points - Which Number is Correct?
+
+  In our earlier discussion, I noticed two different point values mentioned for starvation death:
+  - In one place: "cash it in for 25 points"
+  - 5%In another place: "send it to the great beyond for 50 points"
+
+  Question: When a creature dies from starvation, how many Great Beyond points should the owner receive?
+  - A) 25 points***
+
+
+Headstone/Casket Random Chance
+
+  You mentioned a great idea - instead of choosing between Great Beyond OR Headstone/Casket, there would be a random chance of getting a headstone or casket when sending to the Great Beyond.
+
+  Question: What percentage chance should this be?
+  - A) 5% chance***
+
+
+1.4 Maximum Creatures Per User
+
+  Is there a limit on how many creatures one player can own? *** No
+
+  Questions:
+  - A) Is there a maximum number of creatures per player? (Example: 50 max? 100 max? Unlimited?) *** No
+
+
+When a player wins the 5% memorial chance, how should they receive the headstone/casket?
+  - A) Delivered to mailbox (like other items)
+  - B) Rezzed in front of the creature being sent  ***
+  - C) Other method?
+
+ 2. Headstone vs Casket Selection
+  When player wins the 5% memorial, how is headstone vs casket determined?
+  - A) Random 50/50 (currently implemented) ***
+  - B) Player chooses
+  - C) Always headstone OR always casket
+
+ 3. Decorative Creatures - How to Send to Great Beyond?
+  - There should be the Sent to Great Beyond button in decorative creatures?
+
+*** Yes
+
+ 4. Booster Application Method: How are boosters applied?
+  - A) Touch creature, select from menu
+  - B) Rez booster near creature, auto-apply
+  - C) Click booster, then click creature
+  - D) Other?
+
+*** I would say click booster then click creature but which is easier more reliable?
+
+Me: Regarding booster application method, I think your opinion is more intutive and provides good UX to the users.
+
+
+
+
+ 5. Resurrect Booster Eligibility: Can Resurrect Booster revive:
+  - A) Only starvation deaths? (gives second chance to feed)
+  - B) Also old_age deaths? (resets age)
+
+*** Only starvation deaths
+
+ 6. Booster Acquisition: How do players obtain boosters?
+  - A) Drop from deliveries?
+  - B) Purchase with Great Beyond points?
+  - C) Marketplace purchase?
+
+*** Purchase from store, and I would like option to drop anything in anyone's mailbox, IF this is possible or would this be too complicated? Let me know on this.
+
+And for the booster Acquistion, yes! this is possible. So user can purchase items from the store, but they also can drop it from anyone's mailbox not only owners? Just let me know please and I will follow you!
+
+
+7. Failed Auto-Breeding Cooldown
+     - A) Yes, same 4-day cooldown
+     - B) No, retry after 1 hour (current)
+     - C) Shorter cooldown
+
+  8. "Along with the mix of other things" regular breeding - what does this mean?
+
+
+***"Along with mix of other things" means... this is not exactly a breedables games, I call it a Hybridable as yes there is a chance of a baby at 1%, look here https://gyazo.com/12dba4fa88d5cc35b914b4a74e23537e
+
+so during the Goobiez A / Goobiez B event (after they have eaten and are ready to (so called breed) it will drop one of those items
+
+[4:47 PM]
+Also the Fuggiez have their own Tree like we discussed on the google docs
+
+[4:47 PM]
+I changed the name of token to coin as to be less confusing, so there is a Coin and a Rare Token that has a chance of dropping
+
+[4:47 PM]
+let me tree the Fuggiez
+
+I think to start we can just have Goobiez have the event for now unless you already set up the Fuggiez to breed as well?
+
+
+Julian Ferreyra  [4:59 PM]
+Yes, currently we have only Goobiez event flow, so will work on there
+
+Minkka Sirvel  [4:56 PM]
+we also need something in regards to this: https://gyazo.com/52bdd1a1e4ea705cd4d73043b1349bf6
+
+
+Minkka Sirvel  [4:58 PM]
+i know there are percentage missing on the chart but I am not sure how you will handle the extra drops monthly.
+
+Julian Ferreyra  [2:49 PM]
+
+In the previous requirement, the 8.5% "monthly special" is already in the main drop table. When a creature delivers, there's an 8.5% chance to get the monthly special instead of other items.
+
+According to the diagram, you want Monthly LE drops to be additional (bonus on top of normal delivery), not part of the main table, right? So a player could receive their normal drop and have a small bonus chance for an LE item.
+
+My recommendation is
+- Keep the existing 8.5% monthly special in the main table
+- Add a new separate LE bonus system:
+Each month's LE can be toggled ON/OFF
+Small bonus chance (2-5%) checked AFTER normal delivery
+Player can get both normal item + LE in same delivery
+
+
+This way it's truly "additional" as you mentioned.
+
+Regarding the admin panel, it will send any item to all players, selected players, or single player. Useful for events and customer support
+
+
+Thanks for the clarification! I now understand - this is a "Hybridable" system, not traditional breeding
+
+So when Goobiez A + Goobiez B are together and ready (fed), they produce ONE item from the drop table:
+  - 30% Friend
+  - 30% Family
+  - 10% Coin
+  - 10% SLox
+...
+
+  Quick question: Is this the SAME as the delivery system (every 12 days), or is this a SEPARATE event that happens when two creatures are nearby?
+
+  In other words:
+  - A) Delivery happens every 12 days regardless, AND there's extra drops when 2 creatures together?
+  - B) Delivery ONLY happens when 2 creatures are together (hybridable event)?
+Minkka Sirvel  [5:02 PM]
+it's the same
+
+[5:02 PM]
+b
+
+
+
+
+
+
+  9. Mailbox Full During Baby Delivery
+     - A) Breeding fails
+     - B) Baby queued for retry
+     - C) Other solution
+
+
+***What other solutions do we have for mailbox full because I know some people will ALWAYS have a full mailbox, could we rez out the overflow or would that be too chaotic?
+
+Me: Hmm, here is my options for mailbox overflow
+
+First, Rez baby directly near the creature/mailbox if mailbox is full
+  - Pro: Baby is never lost
+  - Con: Could be chaotic if many babies at once
+
+Second, Queue babies and retry delivery every hour until mailbox has space
+  - Pro: Clean, organized
+  - Con: Player might not know babies are waiting
+
+Also, Rez baby + send notification message
+  - Pro: Combines both - baby is safe + player knows about overflow
+  - Con: Slightly more complex
+
+  Which approach do you prefer? I recommend second option. it is a bit complex, but provides the better user experience and systematic.
+
+
+*** What i mean is, ME - Owner can send any item to a person's mailbox. Does that make sense? Not that they can trade or they can send anything just Admin of Goobiez can either gift or replace or send directly to user thru the mailbox. Maybe make a different section of mailbox for this? would that be too much trouble?
+
+
+
+Me: Okay makes sense!
+It is good idea to separate the mailbox two "Deliveries" + "Admin Gifts". It is very cleaner organization and player can easily see what admin sent.
+There can be bit more work but not too much trouble
+
+it's cleaner and players will appreciate knowing what came from you vs what they earned
+
+
+
+
+
+
+
+
+
+10. Auto-Breeding Frequency
+    How often should auto-breeding attempt?
+    - A) Once per hour (current LSL limit)
+    - B) Once per delivery cycle (12 days)
+    - C) Other interval
+
+
+***Will the creatures constantly be seeking if they can breed for once per hour? How is this set? Like when they get to a specific number? i know many breedables list the fervor percentage and then at 100 they can breed, however I wanted to eliminate all those statistical numbers for players as many don't even look at them or care. But I am open to what works best for this system.
+
+Me: egarding the auto-breeding feature, the current system is already simple with no statistics. When a player rezzes 2 creatures within 10 meters of each other, the creatures automatically try to breed in the background once per hour with a 10% chance of success per attempt. If successful, the baby is delivered to the mailbox and both creatures enter a 4-day cooldown. If the attempt fails, the creatures silently try again the next hour without any notification.
+
+What the player sees is minimal - the hover text simply shows "Breeding: Ready" or "Breeding: Cooldown (3 days)". That's it. No fervor percentage, no heat meters, no numbers to track.
+All the player needs to do is keep 2 eligible creatures near each other, check their mailbox for babies, and wait for the cooldown to end before the next breeding can occur.
+
+No complex stats, no percentages, completely passive and automatic for now.. Is this simple enough, or would you like any changes?
+
+
+
+
+
+
+
+
+2. Feeding system
+
+1. Food Source              
+                                                  
+How does food work? Is it:                                                                                                                                                           
+- Purchased item from store (food.lsl object)? 
+***Yes
+- Free(or any cost) feeding via creature menu?                                                                                                                                                               
+- Both options available?
+*** Would also like a way to have food on the portal to feed the Goobiez they keep on the portal if possible
+
+  2. Food Cost 
+  - How many Great Beyond Points to buy food? *** 2000
+  - Is food single-use or multi-use? 
+*** Single use, they go to store to buy the food after it’s eaten I would like it to just be a decor item that can be traded or collected (because it’s decorative food)
+
+
+
+3. Food Restoration Amount
+
+- Currently I am going to set to 12 munchiez per feed. Does it work for you?
+- Or a different amount? 
+*** Can you explain this more? Do you mean each food source will contain 12 feedings that will last 1 Goobiez for 12 days?
+
+You asked about "12 feedings" - let me explain:
+Each food item has a number of "feedings" (like charges). When a creature eats, it uses 1 feeding from the food.
+For example, 25 feedings per food (feeds 1 creature for 25 days, or 5 creatures for 5 days)
+
+
+4. Feeding Limits
+
+- Can the owner feed unlimited times? 
+*** I would like it that the Goobiez will eat from the food while the food is near, but not sure how to base this, hourly or are there other options? What do you suggest and what would be easiest?
+
+There are following options for this feature.
+
+Option A: Once Per Day (Every 24 Hours) - Recommended                                                                                                                                                   - Creature eats once per day automatically
+
+  Option B: Twice Per Day (Every 12 Hours)
+  - Creature eats twice per day
+
+  Option C: Hourly
+  - Creature eats every hour
+
+  Option D: On-Demand (When Hungry)
+  - Creature only eats when Munchiez drops below a threshold (e.g., 80%) ***
+
+
+  5. Is a food container required? 
+  *** Will be a decorative food try or item that resembles food
+
+  6. Food Item Mechanics (if physical item)
+
+  - Does food need to be near a creature to work? 
+*** I think it should be on the same simulator in SL, can it work without it being near the creatures?
+
+Yes, this is absolutely possible! The food doesn't need to be physically close to the creatures. As long as the food and creatures are on the same simulator (region), they can communicate. Technically, I will use a function which broadcasts a message across the entire simulator. So if users rez food anywhere on your land, all your creatures on that same sim will detect it  and eat automatically
+
+But in this case, should there be sth like the distance range between creature and food which allows creatures to be able to eat food in that range? Then creatures can’t eat food outside of range. What’s your opinion? 
+
+*** I know with other games/breedables in SL this has been done either way, some people love the full sim feature others love the distance so they can separate their creatures of any type. I would say let’s go with a range because the full sim option seems to not work as correctly as the ranged eatings in SL.
+
+Okay, I will implement this feature not entire region method
+
+
+  - Does food get consumed (deleted) after use? *** Yes, consumed but container (food try) stays for decor and can be picked up, sold/traded etc.. however maybe it needs a chance somehow as to not confuse others of which food is still good and which food is eaten. *Thnking
+
+I think we can choose one of the options below.
+  Option A: Glow Effect
+  - Full food: Glows softly
+  - Empty food: No glow
+
+  Option B: Color Change
+  - Full food: Bright/colorful
+  - Empty food: Gray/faded appearance
+
+  Option C: Hover Text
+  - Full food: Shows "Goobiez Food - 85 feedings left"
+  - Empty food: Shows "Empty Food Tray (Decoration)"
+
+  Option D: Different Object Appearance
+  - Full food: Shows food on the tray
+  - Empty food: Shows empty tray only
+  - (This requires two texture/mesh states)
+
+
+***Can we do B & C? 
+
+Currently, I’ve already implemented A & C. I will update this feature, too 
+
+*** Ok thank you I know some people have different graphics settings and can never see certain things anyway lol, so anything to make it more visual is good.
+
+
+- Can one food item feed multiple creatures? 
+***Yes, Goobiez & Fuggiez, same food and can all eat out of 1
+
+
+You mentioned one food can feed multiple creatures (Goobiez & Fuggiez from the same food). Should there be a limit on how many creatures can eat from one food? or no limit? 
+** No Limit if possible
+
+Okay, no problem
+
+- Munchiez Restored Per Feeding
+
+When a creature eats, their Munchiez increases. Since Munchiez decreases by 10 per day, I need to know how much eating restores. How much Munchiez should one feeding restore?  
+*** 2.4?
+
+- Same Owner Requirement
+
+When food is rezzed, should it only feed creatures owned by the same person?  *** Yes
+For example If Player A rezzes food, can Player B's creatures also eat from it? *** I would like a button on food to set for just the owner or ALL, or Group if possible.
+ 
+- Multiple Food Objects
+
+  If a user rezzes multiple food objects on the same simulator or around the creature, how should creatures choose which food to eat from?
+  - A) Eat from any available food (random)
+  - B) Eat from the food with the most feedings left
+  - C) Eat from the nearest food ***
+
+ - Maximum Creatures Per Food
+
+  You mentioned one food can feed multiple creatures (Goobiez & Fuggiez from same food). Should there be a limit on how many creatures can eat from one food? or no limit? 
+*** No Limit
+
+- Munchiez Maximum Cap
+When a creature eats, should there be a maximum Munchiez they can have?
+
+Question: What's the maximum Munchiez after eating?
+  - A) Cap at 100 (can't exceed 100 even if they eat more) ***
+  - B) No cap (can go above 100 as "reserve")
+
+
+
+3. Breeding System
+
+I think most successful breedables require two different creatures with a cooldown period after breeding. This creates trading demand and prevents Oversaturation.
+*** Yes, a cooldown period of 4 days would be good in my opinion.
+
+Questions:
+  - Breeding requirements:
+  - Same type only? (Goobiez + Goobiez)  
+   *** Yes
+Goobiez + Goobiez
+Fuggiez + Fuggiez
+ - Cross-breeding allowed? (Goobiez + Fuggiez = ?)
+	*** No
+ - Minimum age to breed?
+	***4
+ - Same owner or different owners can breed?
+	***Same
+  - Breeding cooldown:
+    - How long after breeding before creature can breed again?
+    - Should this be the same as delivery (12 days)?
+	***Yes, 12 days total so 4 days cooldown, 8 days gaining delivery chance
+  - Offspring:
+    - Inherits traits from parents? *** No
+    - Chance of rare variants? 
+***Just the items I’ve listed above (nothing passes, it’s a completely different object
+    - Where does baby appear? (Mailbox? Direct to inventory?)
+	*** All Babiez will be packaged in a collectible Carriage, I would like it to drop outside of the mailbox if this is possible, altho I know SL can sometimes have many rezzing issues from objects, so this is something I am open with. Although thinking of it, could we have a button that would rez the items onto the ground from the mailbox?
+
+Breeding Babiez vs Delivery Drop Babiez
+
+  Babiez can come from two sources:
+  1. Breeding - when two creatures breed (10% or 75% with pedestal)
+  2. Delivery drops - random drop from creatures (1% for Goobiez, 5% for Fuggiez)
+
+  Question: Are these the same Babiez item, or are they different?
+
+  - B) Different types (Breeding Babiez vs Drop Babiez) *** There are Goobiez Babiez & Fuggiez Babiez and will have new pool every month. Goobiez Babiez drop from Goobiez and Fuggiez Babiez will drop from Fuggiez.
+
+
+Heart Pedestal Math
+
+ You said that to increase chance of baby by 75%" with base 10%
+
+  Question: Which calculation?
+  - A) 10% + 75% = 85% total  
+
+A) 10% + 65% = 75% total ***
+
+Babiez Delivery Location
+
+You mentioned Babiez come in a "collectible Carriage" and asked about dropping outside the mailbox. Current implementation: All items rez 2m in front of mailbox when claimed.
+
+  Question: Is this location acceptable for Babiez Carriage, or would you prefer a different behavior?  *** Same behavior is fine, there are some very crazy people in SL that might have literally hundreds of Goobiez/Fuggiez which will create many things rezzing out so I’m not sure how this will be for second life as not all second life connections are so reliable. We’ll see tho lol
+
+Breeding Trigger Mechanism
+
+  Two creatures need to breed together to have a chance at Babiez.
+
+  Question: How should breeding be initiated?
+  - A) Menu option on creature: "Breed" → Select another eligible creature nearby
+  - B) Automatic: Two eligible creatures within range have passive chance each delivery cycle ***
+  - C) Heart Pedestal only: Must use pedestal to breed
+  - D) Other method?
+
+
+Heart Pedestal - How It Works
+
+  You mentioned "attach 2 Goobiez to it" to increase baby chance to 75%.
+
+  Questions:
+  - A) How do users "attach" creatures? (Click pedestal → Select creature from menu? Drag creature onto pedestal?) ***Which do you think would be more reliable & easy?
+  - B) Do creatures need to stay attached for the full breeding cycle (12 days)? *** I would say have the heart pedestal become decor after conception.
+  - C) Can creatures still eat/age normally while attached? *** Yes
+  - D) Is the pedestal consumed after use, or reusable? *** Consumed
+
+
+Breeding Without Pedestal (10% Base Chance)
+
+  If breeding can happen without the Heart Pedestal at 10% base chance:
+
+  Question: How is this triggered?
+  - A) Automatic - Any two eligible creatures nearby have 10% chance each delivery cycle ***
+  - B) Manual - Owner clicks menu to attempt breeding (10% roll happens)
+  - C) Proximity-based - Creatures must be within X meters of each other
+
+
+Baby Delivery Location
+
+  You mentioned wanting Babiez Carriage to "drop outside of the mailbox."
+
+  Question: Clarification needed:
+  - A) Baby Carriage goes to mailbox → User claims → Rezzes in front of mailbox (same as other items)
+  - B) Baby Carriage auto-rezzes near the parent creatures (skips mailbox entirely) 
+  - C) Baby Carriage auto-rezzes near the mailbox (no claim needed)
+
+  Note: Option A is most reliable in SL to avoid rezzing issues. Options B/C may fail if land doesn't allow object rez. ** This is fine!
+
+
+Breeding Eligibility Display
+
+  When owner checks if creature can breed:
+
+  Question: Should the creature menu show breeding status?
+  - Example: "Breeding: Ready" or "Breeding: Cooldown (3 days left)"
+  - Or keep it hidden? *** Show if possible would be helpful ***
+
+
+Failed Breeding Attempt
+
+  If two creatures breed but don't produce a Babiez (90% chance without pedestal):
+
+  Question: What happens?
+  - A) Nothing - just no baby, try again next cycle
+  - B) Deliver a consolation item instead (Token, Friend Visit, etc.) ***
+  - C) Show message: "No baby this time"
+
+
+  1. How breeding is triggered - Menu? Automatic? Proximity? Proximity or Heart Pedestal ***
+  2. How Heart Pedestal "attach" works - Physical? Menu selection? I would say Menu would work best in SL. ***
+  3. Duration on pedestal - How long creatures stay attached? 72 hours or until baby drops which I think 72 hrs if they buy a pedestal would be ok. ***
+  4. Pedestal reusability - Consumed or permanent? Consumed ***
+  5. Baby delivery mechanism - Mailbox vs auto-rez near parents Mailbox is fine ***
+  6. Failed breeding outcome - What happens when no baby? If using a heart pedestal they get a token if no babiez ***
+  7. Breeding status display - Show cooldown in creature menu? Yes ***
+
+
+
+4. Delivery System
+
+
+Fuggiez Delivery Percentages (Missing 10%)
+Fuggiez          60%
+Goobiez         1%
+Token            10% 
+Rare Token    0.5% 
+SLox            10%    
+Monthly Special  8.5%
+
+ Total            90% 
+
+Question: What is the missing 10%?  
+** Sorry! Stranger 5%, Fuggiez Baby 5%
+
+
+  - What kind of items can be delivered?
+Going to rank these with percentages as examples only, suggestions appreciated as well!
+Goobiez
+Friend Visit - 30%
+Family Visit - 30%
+Stranger - 5%
+Fuggiez - 5%
+Babiez (rare) 1%
+Token - 10%
+Rare Token (rarest) .5%
+SLox - 10%
+(would like 2 categories that can also be changed monthly for special drops, turned on or off if possible, if not something in it’s place) - 8.5%
+
+
+Fuggiez
+Fuggiez (most common, only 2 Fuggiez can breed together, Fuggiez do not breed with Goobiez but Goobiez can still get a Fuggiez delivery (like a visitor) - 60%
+Goobiez (rare) - 1%
+Token - 10%
+Rare Token (rarest) .5%
+SLox - 10%
+(would like 2 categories that can also be changed monthly for special drops, turned on or off if possible, if not something in it’s place) - 8.5%
+
+  - Does creature type affect delivery? (Goobiez vs Fuggiez different items?) 
+*** Yes see previous answer
+  - Can players boost delivery speed? (Consumable items, breeding pairs?)
+***Another booster type item is a heart pedestal they can rez and attach 2 Goobiez to and it will increase their chance of having a Babiez (<-- decor type item) Altho I still want a Babiez to be possible without the pedestal so I would say the pedestal will increase the chance of a baby by 75%. But having a baby with regular breeding is maybe 10% (along with the mix of other things)? 
+
+5. Mailbox System
+
+In my opinion, the mailbox should have a capacity limit (e.g., 20 items) and visual indicators for different states. This encourages regular check-ins.
+*** Yes I agree
+
+Questions:
+- Maximum items mailbox can hold?
+*** 20 seems fine I am open to suggestions on this
+- Do items expire if not collected? How long? 
+*** No, but if mailbox fills up where will they go?
+
+### how about block new deliveries?
+  - Creature's delivery timer pauses until mailbox has space
+  - Hover text shows warning: "Mailbox full! Collect items to receive deliveries"
+  - Nothing is lost, player just needs to collect items
+
+
+  - Multiple mailboxes per user allowed? 
+  ***Yes, however this might complicate things (thinking)
+
+    I recommend starting with one mailbox per user for simplicity. We can add multiple mailbox support later if needed. Does this work  for you?  *** Yes
+
+  - Notification system for new items?
+***Initially visual indicators were my thoughts however, I am open to other possibilities as well as I will think more.
+
+- Token Claim Behavior
+
+  When a user claims a Token or Rare Token from the mailbox:
+
+  Question: Should it:
+  - A) Rez as a physical object they can trade/sell/click to cash in later **Yes
+  - B) Auto-add points directly to their account (10 pts / 100 pts)
+  - C) Player chooses via dialog: "Rez Item" or "Cash In Now"
+
+**  Best practice: Option A gives players trading flexibility, which you mentioned wanting.
+
+
+- SLox Box Behavior
+
+  When user claims a SLox from mailbox:
+
+  Question: Should the SLox:
+  - A) Rez as a box object → user clicks to open → gets 1 random item from the 12**
+  - B) Skip the box, directly rez 1 random item from the 12
+
+  Best practice: Option A creates an "unboxing" experience players enjoy.
+
+
+
+
+6. Items & Collectibles
+
+
+- SLox 90-Day Rotation
+
+  You mentioned "SLox stays the same for 90 days and contains 12 different objects."
+
+  Question: Just to clarify - does this mean:
+  - A) The 12 objects inside SLox change every 90 days (new pool of items) ***
+
+
+ - "Stranger" Definition
+
+  Listed as 5% drop for Goobiez but not explained.
+
+  Question: What is a Stranger?
+  - A creature type? ***Yes this is a creature type that will change monthly (1 type for Goobiez and a different type for Fuggiez)
+ 
+
+- Headstone/Casket Monthly Variety
+
+  You mentioned headstones and caskets will change monthly, similar to other rotating items.
+
+  Questions:
+  - A) How many different headstone designs per month? (1? 3? 5?) 
+  *** 1 for Goobiez & 1 for Fuggiez
+  - B) How many different casket designs per month?  
+  *** 1 for Goobiez & 1 for Fuggiez
+  - C) Are Goobiez headstones different from Fuggiez headstones?
+   *** Yes
+  - D) When a player gets a random headstone/casket, is it randomly selected from that month's pool? 
+*** Yes
+
+
+ - Friend Visit vs Family Visit Difference
+
+    Both "grow the Goobiez Collection" per your diagram.
+
+    Questions:
+    - Are these new creatures with lifecycle (age/munchiez)? 
+    *** Yes new creatures with lifecycles
+    - Or permanent decorations? 
+   *** Only creatures that are permanent decorations are Babiez or Fuggiez Babiez.
+
+    - What's the actual difference between Friend and Family? 
+*** Just the name and the particular creation of them. 
+Each month they will change, how difficult will this be to swap out creatures?
+
+Will have the following:
+2 Limited Edition Goobiez OR 2 Limited Edition Fuggiez (availabe to purchase at Goobiez store)
+3 Friends (drops)
+3 Family (drops)
+3 Fuggiez (drops)
+1 Goobiez Stranger (drops) 
+1 Fuggiez Stranger (drops)
+1 Goobiez Babiez
+1 Fuggiez Babiez
+Token (stays the same)
+Rare Token (stays the same)
+SLox (stays the same for 90 days and contains 12 different objects 1 in each SLox - random will drop)
+
+
+
+- Eternalz Item
+
+***@Julian Ferreyra Can you please add a potion named Eternalz which will when applied keep the Goobiez or Fuggiez from ever dying altho it turns them into just a decor item, so that they don't die, they don't breed or turn black and can't be turned in for Great Beyond points.  Let me know, thank you very much!
+
+Sure, no problem
+I think this potion is similar to the foever booster.
+The difference is just it is applied to alive creature and makes it immortal but there is no point, right?
+
+Regarding this, I have some questions
+Can eternalz efect be undone?
+How do players obtain this? It is same as other boosters?
+
+I would appreciate if you clarify me  regarding above questions before I start working on this feature. Thanks! 
+
+
+*** Yes at any time they can use the potion to make the creature immortal and it will never have to eat again, it won’t die and it won’t breed. So is more like a decor item at that point.  Eternalz cannot be undone. They can buy the potion with Linden’s in the store. Let me know if there are more points I missed, I know each thing triggers a lot of situations lol. 
+
+
+
+
+
+
+7. Boosters & Special Items
+
+
+Resurrect Booster - What Happens?
+
+  When a player uses a Resurrect Booster on a dead creature, I need to know what stats the creature comes back with.
+
+  Questions:
+  - A) Does the age reset to 0? Or stay the same age it died at?
+  - B) Does Munchiez reset to 100%? *** Reset to 20%
+  - C) Can it resurrect creatures that died from old age (age 100)?  *** No
+  - D) Can it resurrect creatures that died from starvation? *** Yes
+  - E) Is there any cooldown before a resurrected creature can be resurrected again? ***Yes, 3 days
+
+Forever Booster
+
+  Question: What does Forever Booster do?
+  - Immortality (never dies of old age)?
+  - Something else?
+***I would like the Goobiez to black out upon death, If they use a Forever Booster all it does it un-blacks them. Stops delivery, Stops Munchiez & Stops Age, so maybe just an edit to stats or with Age change to Forever Goobiez or suggestion? Symbol? Or also 100 is fine whatever is easier lol
+
+8. Economy & Currency
+
+Linden Dollar (L$) vs Great Beyond Points
+
+You confirmed that store purchases (food, boosters, LE creatures, HUT) use Great Beyond Points.
+
+*** Store Purchases with L$ include:
+LE’s
+Food 
+Boosters
+Possibly other products in future
+
+Great Beyond Points can buy
+Food
+Special Great Beyond Goobiez & Fuggiez
+A Build a Goobiez session for 1 Goobiez
+
+Questions:
+  - A) How do players initially GET Great Beyond Points?
+     - Buy with L$?
+     - Only from sending creatures to Great Beyond? *** And from the Tokens that drop (not the Rare token) Only the Tokens give points.  The Rare Token gives a free Month of Patreon however, I am currently thinking of NOT using Patreon and keeping it in World, I will decide this tonight as I need to think lol sorry! ***
+
+  - B) If players can buy points with L$, what's the exchange rate?
+     (Example: L$100 = 50 Great Beyond Points?) ***No they can’t buy points
+  - C) Are the initial Starter Goobiez/Fuggiez purchased with L$ directly? ***  Yes
+
+
+Decorative Creature Points Value
+
+  Decorative creatures (Babiez, Forever Goobiez, HUT creatures) can also be "cashed in" to the Great Beyond for points.
+
+  Question: How many Great Beyond Points should each decorative creature type give?
+  - Babiez: 200 points
+  - Forever Goobiez/Fuggiez: 1000 points
+  - HUT Creature: 1000 points
+
+***Can these points be changed after beta & testing? 
+Sure, no problem
+
+
+Token to Great Beyond Points Exchange Rate
+
+  Players can click on Tokens to "cash them in" and convert them to Great Beyond Points.
+
+  Questions:
+  - A) How many Great Beyond Points for 1 regular Token? (Example: 1 Token = 10 points?)
+  - B) How many Great Beyond Points for 1 Rare Token? (Example: 1 Rare Token = 100 points?)
+
+*** Yes to both examples
+
+
+
+
+
+9. Store System
+
+
+Limited Edition Store Creatures - Details
+
+  The store will sell 2 Limited Edition Goobiez OR Fuggiez that change monthly.
+
+  Questions:
+  - A) How many Great Beyond Points to purchase one LE creature? *** Zero they can’t purchase with Great Beyond Points
+  - B) Are these LE creatures breedable (with lifecycle) or decorative only? *** Yes Breedable they start the whole cycle
+
+
+Society of Shadows - Clarification
+
+You mentioned Society of Shadows is a monthly subscription (via Patreon) for a special Goobiez & Fuggiez, and players can win a month with a Rare Token.
+
+*** I’ve decided to make everything in Linden$ so Society of Shadows will be a store purchase monthly with Lindens, so the only way you can get a membership is with Lindens or the Rare Token (a month)
+
+  Questions:
+  - A) Are these Society of Shadows creatures breedable or decorative?  *** Breedable
+  - B) Are these different from the Limited Edition store creatures, or the same creatures? *** Different
+
+
+
+Goobiez HUT Function
+
+ Listed as store purchase item.
+
+*** This will run in a factory (hut) where the person can use their Tokens (I want tokens to be able to be sold/traded or clicked on to cash in and added to their Great Beyond Points) after they accumulate enough to cash them in for a create a Goobiez.
+
+The Goobiez that come out of the HUT, will NOT be able to breed and will be decor only, however I would still like them to be able to be cashed in when they don’t want them anymore for Great Beyond Points.
+
+There will just be some cute special Goobiez or Fuggiez they can choose from (more gimmick then anything) to spend their points on.  The points need to be high, I would say 5,000 depending on how we scale the points.
+
+So currency for the Goobiez hut & for purchase of food items, boosters & 2 special Goobiez (will change periodically) will come from the Great Beyond Points.
+
+
+
+Booster Prices in Store
+
+  The store sells Resurrect Booster and Forever Booster.
+
+  Questions:
+  - A) How many Great Beyond Points for a Resurrect Booster? 
+  - B) How many Great Beyond Points for a Forever Booster?
+
+*** Can’t buy Boosters with Points
+
+
+10. Trading & Transfer
+
+
+Creature Transfer/Trading Between Players
+
+  Can players give or trade creatures to other players?  *** Yes
+
+  Questions:
+  - A) Can creatures be transferred to another player? (Yes/No) *** Yes
+  - B) If yes, is this done through:
+    - ***Direct trade in Second Life (giving the object)
+  - C) When transferred, does the creature keep all its stats (age, munchiez, etc.)? *** Yes
+
+
+
+
+11. Technical Configuration
+
+
+Time Calculation Details
+
+    Confirmed values:
+    - Munchiez: -10 per day
+    - Age: +1 per day
+    - Delivery: every 12 days
+    - Breeding cooldown: 4 days
+
+    Questions:
+
+    A) How should "per day" be calculated?
+
+    ***  - Server job (daily batch update)
+
+    ***  My recommendation: Server job - simple and consistent. That is fine.
+
+    B) Does breeding cooldown also pause when in inventory?
+***       - Yes (same as age/munchiez)
+
+    C) When does the delivery timer start?
+       - At creature birth
+       - After last delivery completes
+
+   ***    After last delivery (or birth for first delivery). That’s fine!
+
+
+
+Monthly Item Rotation - Delivery Method
+
+  Each month you'll have new rotating items (Friend, Family, Stranger, Monthly Special, etc.).
+
+  Question: How will you provide these new items to me?
+  - A) Send me updated LSL objects in Second Life each month
+  - B) A shared folder where you upload new objects *** This is my preferred choice
+  - C) Something else?
+
+  Note: The delivery percentages and item type logic are server-side and easy to update. Oh nice thank you!
+
+
+Assets ID System
+
+*** Can you give me some clarification about the assets. Because of how we upload mesh into second life with many options, how will the options transfer from the server? or will the server be pulling from a source IN Second life of all ready uploaded transfer items only with scripts? can you tell me how that works? (when you have time) so I can get things better prepared? ty!! 
+Regarding the Assets ID system, the server does not transfer mesh/objects to Second Life. SL doesn't allow that - all mesh, textures, and objects must be uploaded directly to Second Life as you normally do.
+
+What we do instead in the system:
+
+1. You prepare all items in Second Life - Upload your mesh, apply textures, set up the objects exactly as you want them. These stay in your SL inventory.
+2. Add our verification script to each item - A small LSL script goes inside each prize/decor object.
+3. Distribution happens IN Second Life - Use a vendor, giver box, or direct trade to give items to users. This is all normal SL functionality.
+4. The script handles registration automatically:
+  - When the item is first rezzed by the recipient, the script generates a unique Asset ID
+  - It stores this ID in the object using Linkset Data (survives copy/transfer)
+  - It registers this ID with our AWS server
+5. Verification on every rez:
+  - Each time anyone rezzes the item, the script checks with the server
+  - Legitimate items verify successfully
+  - Copybotted items won't have valid registration (or will have duplicate IDs flagged)
+
+You just need to:
+  - Upload all your mesh/prize items to Second Life as normal
+  - Organize them in a folder for easy access
+  - I'll provide the verification script to drop into each item
+
+The server is just a "registry" that tracks which Asset IDs are legitimate. The actual items live entirely within Second Life. Please let me know if you have any unclear points.
+
+Thanks.
+
+
+
+*** Thank you Julian! I have had many people tell me otherwise which I thought was crazy but you know how people talk about things that really are not so. I figured the server just calls the items from a script from inventory or from within SL, but ty so much for that clarification!
+
+
+
+Minkka Sirvel  [7:03 AM]
+ok question, will players be able to send their Goobiez to the portal or is the portal just tracking all Goobiez?  My initial desire was to have the portal as a place so that the Goobiez did NOT have to be on the land in Second Life because many do not have the land to place prims. So they can retrieve their Goobiez thru portal or send their Goobiez back to portal.  If you need an example of this being done in SL I know a breedable that does it, I can send you one and a LM to get a portal so you can see it is done. Let me know.
+
+
+
+Julian Ferreyra  [9:54 AM]
+For now, when players take their Goobiez into their SL inventory (not rezzed), the creature's time automatically pauses, so they don't age or get hungry while stored. when they rez the creature again, it recoonects and resumes from where it left off.
+
+So is the goal to avoid SL inventory entirely? currently the creature objects stay in  player's SL inventory when not rezzed. it should be deleted from SL completely and stored only in database?
+
+For "retrieve", how should the creature come back to SL? Player should be able to clicks "Retrieve" on web portal, then creature appears at a Portal Rezzer object they own in SL. How about this approach or need anything else?
+
+If you send the examples, I'd appreciate and love to see the them! So I can see how another product handles this. That will help me understand the exact flow you want.
+Thanks.
+
+Minkka Sirvel  [3:36 PM]
+I have an avatar set up, log in at last location or I did set his home (so you can teleport home).  Login information = Ashtonflynn   pw:   Dev5719@@
+[3:37 PM]there is a beige small box on the ground which is the portal to the Kittycats (breedable) I did not register him yet so you can see how they have it set to register, etc or the whole process. He owns those kittycats on the platform next to the box. Let me know if you need help or have questions!
+[3:38 PM]the kittycats are unbirthed so when you click on them you can choose to send to their cattery (portal) or birth in world
+[3:38 PM]I will put some Linden's on him as well so you can buy food from their portal to see how that works.
+
+
+```
+
+

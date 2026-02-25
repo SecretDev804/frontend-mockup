@@ -1,0 +1,167 @@
+# Goobiez Project - Upwork Messages & Discussion
+
+**Job Title:** AWS Designer for API, Lambda, and DynamoDB Integration with Second Life
+**Participants:** Julian Ferreyra (Developer), Minkka Sirvel / Jess S (Client)
+**Date:** Thursday, January 15, 2026
+
+---
+
+## Summary
+
+This is the initial Upwork conversation where Julian proposed for the Goobiez project and gathered requirements from Minkka. Key outcomes:
+
+- **Developer Background:** Julian demonstrated prior SL experience with the Farmheart project (farming, breeding, L$ payments) using LSL + AWS Lambda + API Gateway + DynamoDB.
+- **Project Scope Defined:** Breedable creatures game in Second Life with AWS backend.
+- **Core Requirements Identified:**
+  - User registration from Second Life
+  - Creature stats: Munchiez (hunger), Age, Delivery (fervor)
+  - Creature lifespan: 100 days, deliveries every 12 days
+  - Death system: Blackout at 100 days with options for Great Beyond (points) or memorial (Headstone/Casket)
+  - Mailbox system for receiving creature deliveries (glows on new items)
+  - Food system: Separate food objects to keep creatures fed
+  - Online portal: Web-based creature viewer with SL portal integration
+  - All items stored with UUIDs, payment validated server-side
+- **Existing API:** Client has an API but acknowledged it may not be set up properly.
+- **Security:** Client deferred to developer for authentication & security recommendations.
+- **System Architecture PDF** was delivered and approved by client.
+- **Ongoing Availability:** Client asked about long-term support during closed beta; discussion moved to Excalidraw whiteboard session.
+
+---
+
+## Chat History
+
+### January 15, 2026
+
+**Julian Ferreyra** [12:11 AM]
+I've worked on multiple Second Life projects and attached sample LSL scripts along with recorded working videos.
+
+Farmheart (Second Life) - Second Life LSL + AWS Lambda + API Gateway + DynamoDB + JavaScript
+
+I know you've received many proposals, but I encourage you to review my past work. Farmheart shows my experience integrating Second Life (LSL scripting) with AWS services to build a reliable, real-time backend connected to an external web platform.
+
+About 8 months ago, I worked on a Second Life project called Farmheart, a complete farming, plant growth, and animal breeding system. Users could grow crops, raise animals such as horses, dogs, and cats, breed them based on genetics, and manage feed and minerals. All plant and animal metrics were synced in real time to a web-based dashboard.
+
+My role focused on LSL scripting and AWS integration. I designed LSL scripts that communicated with AWS API Gateway, triggering AWS Lambda (Node.js) functions that stored and updated state in DynamoDB. This allowed Second Life objects to persist data reliably outside the virtual world while maintaining fast response times. I also implemented Linden Dollar (L$) payment handling for purchasing seeds, animals, feed, and minerals. Transactions in Second Life were validated via LSL and securely reflected in the backend.
+
+One major challenge was LSL's strict limitations - low memory, limited HTTP request rates, and no native async handling. To solve this, I designed a compact request protocol and minimized payload size. I also implemented retry and timeout logic to handle dropped or delayed HTTP responses gracefully.
+
+Another challenge was data consistency between Second Life and AWS. Since LSL scripts can reset or lose state, I made DynamoDB the single source of truth. Each action (growth, feeding, breeding, purchase) used idempotent API calls to prevent duplicate updates.
+
+Handling Linden Dollar payments was also complex. I needed to validate in-world payments securely and reflect them correctly in the backend. I solved this by verifying transaction context in LSL, sending signed payloads to AWS, and confirming state updates only after successful validation.
+
+I can design a stable and scalable AWS integration that connects your application with Second Life, while respecting LSL constraints and ensuring reliable performance.
+
+I am available to start immediately and can work full time in your time zone. I will provide daily updates and maintain clear communication.
+
+> Attachments: farm-tending.txt (23 kB), animal-main.txt (51 kB), farm-field.txt (40 kB), breed_core.txt (39 kB), 3 video files (64 MB total)
+
+---
+
+**Minkka Sirvel** [12:11 AM]
+Hi Julian! Please tell me what information you need from me about my project in order to get a round about quote? Thanks so much!
+
+---
+
+**Julian Ferreyra** [8:36 AM]
+Hi Minkka! Thanks for reaching out. To provide an accurate ballpark estimate, I'll need a bit more detail about the project:
+
+1. **Integration scope:** What actions should Second Life trigger (e.g., create/update users, assets, payments, stats)?
+2. **API requirements:** Do you already have an API, or should it be designed from scratch?
+3. **Data model:** What data needs to be stored in DynamoDB (users, items, transactions, states)?
+4. **Traffic expectations:** Approximate number of concurrent users and request frequency.
+5. **Authentication & security:** Any auth method planned (API keys, tokens, IP allowlist)?
+6. **Payment flow:** Will Linden Dollar (L$) transactions be validated server-side?
+
+---
+
+**Minkka Sirvel** [12:44 PM]
+Ultimately we would like an online portal for this game as well as the option to bring the creatures into Second Life via a portal. And also a way to send the creatures back to a visual portal on a site (this is done in SL by a few breedables already - they use images of the creatures online and then physical creatures in SL).
+
+**On Integration:** We would need a system that creates a user from Second Life, so yes all integrations listed above will be used.
+
+**On API:** We have an API however it's probably not set up properly.
+
+**On Data Model:** All items need to be stored in a Data Model and each item needs an UUID.
+
+**On Mailbox/Deliveries:** We are planning to use a mailbox in Second Life to receive the items from all of the creatures (the mailbox will glow to show the creatures have dropped 1 of many things - see Milanote).
+
+**On Creature Stats & Lifecycle:** The stats will be Munchiez (hunger), Age and Delivery (fervor) at this point and we will have a separate food that needs to be set up to keep the creatures fed. The creatures will live for 100 days. All creatures will be able to have a normal random delivery every 12 days.
+
+**On Death & Great Beyond:** At the time of 100 days, the creatures will be blacked out (death) and need an option to send to the Great Beyond (for points) or a menu option to click so the creature turns into a Headstone or a Casket (collectible, tradeable, sellable or can also be sent to the Great Beyond for points).
+
+**On Security:** We know very little about Authentication & security so we need a pro for this suggestion. As secure as possible of course.
+
+**On Payments:** The payment flow should yes be validated server side.
+
+> Shared: 2 Gyazo screenshots (project diagrams)
+
+---
+
+**Julian Ferreyra** [12:48 PM]
+Wow, thanks for the detailed explanation! I think this project is very similar to the project I've worked on before. Let me take a look at the requirements and diagram in detail.
+
+---
+
+**Minkka Sirvel** [12:50 PM]
+Ok, thanks! Yes I think most are the same in SL, it seems just different things and ways. Also, this shows up on top of this box, so you might want to verify yourself with Upwork.
+
+> Shared: Gyazo screenshot (Upwork verification notice)
+
+---
+
+**Julian Ferreyra** [12:53 PM]
+I've already submitted ID cards and documents to the Upwork team and it is still under review. I think it will be approved soon. No worries about that at all! If you want we can have a video meeting right now.
+
+---
+
+**Minkka Sirvel** [12:54 PM]
+Ok, just letting you know - wasn't sure if you could see it or not. No, I don't need a meeting.
+
+---
+
+**Julian Ferreyra** [12:55 PM]
+Thanks for your kind understanding.
+
+---
+
+**Julian Ferreyra** [1:43 PM]
+Based on your answers, here is my understanding of the exact requirements and how I would approach the system design. Please let me know if this aligns with your vision after the review on your side. This is the MVP plan and we can discuss the advanced features after MVP implementation.
+
+> Attachment: System Architecture.pdf (84 kB)
+
+---
+
+**Minkka Sirvel** [4:49 PM]
+This initial System Architecture looks good! We plan to have a closed beta for a period of time, so this will probably be ongoing a bit. Is this something you can offer as well? What I mean is, will you be available for changes and future updates? I'm not sure how Upwork works in that regard. Thank you!
+
+---
+
+**Julian Ferreyra** [4:52 PM]
+Well... let me think. Give me a minute.
+
+---
+
+**Minkka Sirvel** [4:55 PM]
+Yes, thank you. I supposed I can just submit changes each time?
+
+---
+
+**Julian Ferreyra** [4:58 PM]
+Are you able to open this link? (Excalidraw collaborative whiteboard)
+
+Are you around? Please open that link and reply back to me.
+
+---
+
+**Minkka Sirvel** [5:01 PM]
+Yes.
+
+---
+
+**Julian Ferreyra** [5:01 PM]
+Thanks.
+
+---
+
+**Minkka Sirvel** [5:01 PM]
+You're welcome!

@@ -1,0 +1,154 @@
+
+================= 2.13 Discussion =============================
+
+Minkka Sirvel  [4:23 PM]
+@Julian Ferreyra I see 1 issue with the booster scan, as much as I like it I now know why perhaps they added it to the creature menu instead.  I think the reason is, not everybody renames their creatures, so you will have a list of the same names and not know which one to choose from the list? What do you think?
+Julian Ferreyra  [4:25 PM]
+So I am considering the additional feature to validate the creature name duplication. then there will be creatures with unique name. Plz let me know your opinion for this option (edited) 
+Julian Ferreyra  [4:38 PM]
+Btw I think this option can cause unnecessary friction. Our current system is item-based, users touch the booster and it scans for eligible creatures. that works fine when creatures have unique names, but as you said, if someone has multiple creatures with the same name, it becomes confusing. The creature-based approach (touch creature → boosters menu → pick from nearby boosters) does solve this naturally since you're already selecting the creature physically. Most SL games use this for that exact reason.
+
+I will implement the feature based on creature touch approach. In this case, I should keep two method or only one (creature-based approach)?
+Minkka Sirvel  [4:42 PM]
+Is there a way or problems with using the scan but have it scan and then touch creature?
+
+Julian Ferreyra  [4:46 PM]
+Wow, that's a smart idea — a hybrid approach. The booster would start the scan, then instead of showing a list of names, it would prompt the user to touch the creature directly. The creature responds back to the booster on the owner channel, confirming the selection. This avoids the duplicate name issue without needing to add a full menu system to every creature.
+Technically this would work in SL using listen + llRegionSayTo between the booster and the touched creature on a private channel — no major problems with that, I think
+
+altho that might be bad too because there would have to be a time limit i suppose
+[4:46 PM]I guess we have to go with button on the creature, is the best way and only 1 way, we don't need 2.
+[4:47 PM]oh ok can there be a time limit?
+[4:47 PM]so they don't touch another creature meanwhile like after they forgot? lol (edited)
+
+Julian Ferreyra  [4:48 PM]
+Yes absolutely, there will be a timeout! Once users open the booster menu on a creature, if you don't confirm within a set time (e.g. 60 seconds), it will automatically cancel and close. So no accidental applications if you get distracted and touch another creature later :smile:
+Minkka Sirvel  [4:48 PM]
+oh then yes go that way!
+Julian Ferreyra  [4:49 PM]
+Yes, no problem :+1:
+Minkka Sirvel  [5:00 PM]
+the creature scripts aren't working as intended right now, correct? Just checking lol
+Julian Ferreyra  [5:02 PM]
+Yes, it needs to be updated as we discussed
+Minkka Sirvel  [5:10 PM]
+ok I have the creature scripts you listed in a creature, can you tell me the other scripts that need to go where for the process to work? My creatures just die quickly with the food.lsl so i'm sure there needs to be something else with it lol. Ty!
+Julian Ferreyra  [5:13 PM]
+The current lifespan is set to 5 ages and hunger reduction rate is 50%. I should them to 100 ages and hunger reduction rate is 10%?
+[5:14 PM]In dev mode, I set the config parameters like that for quick test, lol
+Minkka Sirvel  [5:17 PM]
+no it's ok, keep it for how you need for testing
+Julian Ferreyra  [5:17 PM]
+Can you please test again? I just set it correctly already
+[5:17 PM]:smile:
+Minkka Sirvel  [5:22 PM]
+yes
+Minkka Sirvel  [5:28 PM]
+the percentage of headstones & caskets will need to be adjusted a lot lower as this is a more rare item, but I'm not sure how that was calculated or how it is calculated at this point. But maybe make a note that it needs to be very low chance lol.. also, you told me the items will be pulled and rezzed from an inventory of an avatar? or directly from the mailbox? Right now it does allow me to select but I wasn't sure if it's set to pull and rez yet. Let me know.
+
+2 replies
+Julian Ferreyra
+  Friday at 5:42 PM
+The current percentage of headstones & caskets is 100% for now. It should be 5% based on requirement. but as you know, it would be difficult to test. I will update it now for production mode
+The delivery items is saved in the mailbox and user can take it, so it will be saved to avatar's inventory
+Julian Ferreyra
+  Friday at 5:47 PM
+The delivery itmes info are saved to the mailbox database and the mailbox object (in-world) pulls the data from db and lists. And users can rez it to the land and take to inventory or can use them
+
+Minkka Sirvel  [5:39 PM]
+I was also thinking about the food trays as they will also be collectible (decor) as I see, they are decoration when they are empty.  OR can be turned in for Great Beyond Points.  I'm wondering if maybe it would be easier if #1 we just have the bowls refillable right from the food items with debit permissions (forever) so they can just pay to refill and won't need to travel to the store to refill and #2 give an option to send to the Great Beyond.  So 2 options, keep with refillable option or send to great beyond for points and it's gone.
+Minkka Sirvel  [5:41 PM]
+so they can keep one if they like for decor or turn in for points.
+
+Julian Ferreyra  [5:42 PM]
+Good idea, I will follow you
+
+Minkka Sirvel  [5:41 PM]
+so they can keep one if they like for decor or turn in for points.
+Minkka Sirvel  [5:58 PM]
+I am really liking this setup but I do have another question. Since the items have to be stored in the mailbox in order to rez out, does this mean that each month we will have to issue a new mailbox since we are having different creatures & items each month? And what happens if the person doesn't swap out their new mailbox, will they get the last month's items instead?  I am missing in my brain the connection with the server with objects being rezzed from the mailbox.
+
+Julian Ferreyra  [7:06 PM]
+The mailbox will have pre-loaded with the 8 standard container types. When a user claims items, the mailbox checks the server and rezzes the matching container from its own inventory — this works in any region.
+
+For new monthly specials or any new item types added later, we will have central server object which can send the new items to the mailbox object based on server and database update. Once the new item is in the mailbox inventory, it works the same as the base items from that point on.
+
+So users don't need a whole new mailbox each month just a quick update if we introduce a brand new container type.
+Minkka Sirvel  [7:14 PM]
+oh this is very cool ty!
+
+Minkka Sirvel  [6:16 PM]
+We will also need the containers scripted because they carrying the items and altho they are only decor, they will still need a script so they can be turned in for Great Beyond points.  The following items:
+
+family_suitcase
+friend_suitcase
+stranger_suitcase
+slox
+babiez_carriage
+coin_pouch
+token_pouch
+fuggiez_cage
+babiez
+
+
+so essentially all of these things will be like the coins & tokens just decor items but can be turned in for great beyond points if they want to.
+
+I think we need to change the regular token to the name Coin and the rare token can just be Token that way it will make them different with less confusion. (edited) 
+1 replyJulian Ferreyra  [7:11 PM]
+Yes, I will add scripts for above items (edited
+
+Minkka Sirvel  [7:45 PM]
+One thing I noticed is that when you change the name of a creature and then pick it up, in the inventory it doesn't show the name I changed it too so that might cause some confusion.  It keeps the original name of the items, however i put some containers in my mailbox named according to the container names in the script.
+10 repliesJulian Ferreyra  [8:09 PM]
+Hmm... when I change the creature name and take it to the inventory, the creature is saved with changed name. Please check this video.
+01.mp4 1xMinkka Sirvel  [8:14 PM]
+yes it changes when you bring it back out
+[8:14 PM]however it doesn't change it on the item, so it doesn't write to the name of the prim.
+[8:14 PM]and many people look for their names items in their inventory.
+Julian Ferreyra  [8:15 PM]
+So you mean the object should be saved in the inventory with updated creature name, right?
+Minkka Sirvel  [8:15 PM]
+yes
+[8:16 PM]because say i name my creature Julian, example lol and want to pass Julian to my friend BUT I have maybe 10 other creatures with the name creature in my inventory, then I would have to rez them all out until I find Julian.
+Julian Ferreyra  [8:17 PM]
+haha.. then it is so uncomfortable to find me in the inventory, lol
+Minkka Sirvel  [8:17 PM]
+yes lol
+Julian Ferreyra  [8:18 PM]
+I will update this feature :laughing:
+
+Minkka Sirvel  [8:01 PM]
+Also all creatures should be able to be sent to the great beyond anytime. I noticed I can't send them until after they die and many will want to send their duplicates in before they die at times. I'm sure. :slightly_smiling_face:  ty! Just putting comments here when you get to them is fine.
+1 replyJulian Ferreyra  [8:11 PM]
+Okay I will update it
+
+Minkka Sirvel  [8:06 PM]
+Also if you can add the following to the mailbox buttons:
+
+Support (we have a ticket site for this, so can be a simple link)
+Portal (link to portal is fine)
+EULA (link a page on our site)
+Minkka Sirvel  [8:27 PM]
+Another thing we will need is the ability to turn off all hovertext, so on and off if possible per each creature.  I know some breedables have a device that turns all on & off and that would be nice also if possible.
+
+Julian Ferreyra  [8:36 PM]
+No worries! I will add it
+
+=========================== Feb 7th ============================
+Minkka Sirvel  [7:03 AM]
+ok question, will players be able to send their Goobiez to the portal or is the portal just tracking all Goobiez?  My initial desire was to have the portal as a place so that the Goobiez did NOT have to be on the land in Second Life because many do not have the land to place prims. So they can retrieve their Goobiez thru portal or send their Goobiez back to portal.  If you need an example of this being done in SL I know a breedable that does it, I can send you one and a LM to get a portal so you can see it is done. Let me know.
+6 repliesJulian Ferreyra  [9:54 AM]
+For now, when players take their Goobiez into their SL inventory (not rezzed), the creature's time automatically pauses, so they don't age or get hungry while stored. when they rez the creature again, it recoonects and resumes from where it left off.
+
+So is the goal to avoid SL inventory entirely? currently the creature objects stay in  player's SL inventory when not rezzed. it should be deleted from SL completely and stored only in database?
+
+For "retrieve", how should the creature come back to SL? Player should be able to clicks "Retrieve" on web portal, then creature appears at a Portal Rezzer object they own in SL. How about this approach or need anything else?
+
+If you send the examples, I'd appreciate and love to see the them! So I can see how another product handles this. That will help me understand the exact flow you want.
+Thanks.Minkka Sirvel  [3:36 PM]
+I have an avatar set up, log in at last location or I did set his home (so you can teleport home).  Login information = Ashtonflynn   pw:   Dev5719@@
+[3:37 PM]there is a beige small box on the ground which is the portal to the Kittycats (breedable) I did not register him yet so you can see how they have it set to register, etc or the whole process. He owns those kittycats on the platform next to the box. Let me know if you need help or have questions!
+[3:38 PM]the kittycats are unbirthed so when you click on them you can choose to send to their cattery (portal) or birth in world
+[3:38 PM]I will put some Linden's on him as well so you can buy food from their portal to see how that works.
+Julian Ferreyra  [11:59 PM]
+Thanks, let me try it

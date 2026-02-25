@@ -1,0 +1,36 @@
+Because the overpayment is not accounted for yet? lol sorry as you know it's a lot of little stuff haha  ty so much! :hearts:
+Julian Ferreyra  [12:43 PM]
+you are welcome, @Minkka Sirvel :hearts:
+[12:47 PM]And I am working on the food container refill payment, how about make it to only allow refill when food is empty (0/12)?
+
+I think this is the simplest and fairest approach:
+ - The tray acts like a fixed pack: use all 12, then "recharge" for the fixed price
+ - No wasted feedings, no overpaying
+ - No refund complexity
+ - Matches how KittyCatS and most breedables work (use up food → buy more)
+ - Fair to both users and the creator
+
+What's your opinion?
+Minkka Sirvel  [1:02 PM]
+Yes you’re right is the best with less issues. So I will put a generic food container in store for free that they can buy as many copies but not have that one able to turn in to decor and then other decorative food containers we make will be special drops or for sale at a small price. Because everything in this project can turn into decor or be turned in for GBP I'm trying to think of best way because I know people they will buy 10,000 free food containers click to send them to great beyond so they can buy food free lol. Can you make a special script/asset for the generic food containers? Or any suggestions?
+Julian Ferreyra  [1:06 PM]
+Great idea! Yes, Here's what I'm thinking:
+
+We can have Generic food containers (free at store) :
+  - Feed creatures normally, can be refilled
+  - Cannot be sent to Great Beyond (no GBP exploit)
+  - Cannot become decor — when empty, just shows 'Refill or discard'
+
+Premium/decorative food containers (drops or paid):
+  - Same feeding functionality
+  - Can be sent to Great Beyond for GBP when empty
+  - Becomes decoration when empty
+
+I will add a container_type flag to the script — 'generic' vs 'premium'. The generic script simply hides the 'Great Beyond' option. This way free containers can't be farmed for GBP, but premium ones still have all features.
+
+Does that work for you? (edited) 
+Minkka Sirvel  [1:07 PM]
+Yes perfect. 
+Julian Ferreyra  [1:08 PM]
+Okay, I will add ticket for this feature to the Trello
+[1:10 PM]You are really smart and know well how to solve the challenges. To be honest, I enjoy discussing the features with you, lol. Thank you! (edited)

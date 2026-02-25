@@ -1,0 +1,67 @@
+иσνιє ωяєи ωнιѕρєя is Online
+[2026/01/15 3:15 PM]  иσνιє ωяєи ωнιѕρєя (novie.whisper) is offering friendship.
+
+this is Minkka
+
+(By default, you will be able to see each other's online status.)
+[2026/01/15 3:18 PM] Novie Whisper: (Saved Thu Jan 15 18:17:28 2026)I sent you a LM and will add you to group just IM me lol
+[2026/01/15 3:18 PM] Novie Whisper: (Saved Thu Jan 15 18:17:37 2026)when you are online again :)
+[2026/01/15 3:18 PM] иσνιє ωяєи ωнιѕρєя is Online
+[2026/01/15 3:18 PM]  иσνιє ωяєи ωнιѕρєя (novie.whisper) has given you this landmark:
+Whisper Pines Trailer Park
+[2026/01/15 3:20 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): sent you a group invite
+[2026/01/15 3:25 PM] secretdev: thank you, minkka
+[2026/01/15 3:25 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): you're welcome
+[2026/01/15 3:25 PM] secretdev: I teleported the region you sent invitation
+[2026/01/15 3:26 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): ok you can set your home here if you like
+[2026/01/15 3:26 PM] secretdev: haha thank you
+[2026/01/15 3:26 PM] secretdev: I like here lol
+[2026/01/15 3:26 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): then when you login you can be here also
+[2026/01/15 3:27 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): you can rez here and then check your script lol
+[2026/01/15 3:27 PM] secretdev: okay got it
+[2026/01/15 3:27 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): ok awesome :D
+[2026/01/15 3:27 PM] secretdev: 👍
+[2026/01/15 3:28 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): ok just let me know if you need anything!
+[2026/01/15 3:28 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): or if you need help in here lol
+[2026/01/15 3:28 PM] secretdev: Hmm..nothing for now, thanks
+[2026/01/15 3:28 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): ok :)
+[2026/01/15 3:29 PM] secretdev: I will let you know if I have any question 😄
+[2026/01/15 3:29 PM] иσνιє ωяєи ωнιѕρєя (novie.whisper): ok great and you do the same :D
+[3:14 PM]  иσνιє ωяєи ωнιѕρєя (novie.whisper) has given you this object:
+Goobiez - Family Case (Prototype)
+[3:14 PM] secretdev: thanks for sharing
+[3:14 PM] Novie Whisper: i passed you a suitcase with a fuggiez inside
+[3:15 PM] Novie Whisper: you can rez it
+[3:16 PM] Novie Whisper: if you unpack it i can either put a script to unpack or you can just copy to your inventory
+[3:16 PM] Novie Whisper: then you wil get a Fuggiez
+[3:17 PM] Novie Whisper: All Goobiez & Fuggiez will come in Cases or SLoxes (Boxes) lol
+[3:19 PM] secretdev: hmmm I can't open it
+[3:19 PM] Novie Whisper: you click on it and click open?
+[3:19 PM] Novie Whisper: then it copies to your inventory
+[3:19 PM] Novie Whisper: you click copy to inventory
+[3:20 PM] Novie Whisper: that is how SL holds all items and scripts inside of their prims
+[3:20 PM] Novie Whisper: if still not let me look again
+[3:21 PM] 
+
+[3:21 PM] Novie Whisper: try that one instead
+[3:21 PM] Novie Whisper: delete the other one
+[3:21 PM] secretdev: okay let me try
+[3:22 PM] Novie Whisper: just ignore the script stuff I didn't change it lol
+[3:22 PM] Novie Whisper: still no?
+[3:23 PM] secretdev: I can see the unPacker script and Fuggiez Kitty Bug object
+[3:23 PM] Novie Whisper: but it wont' let you take it out?
+[3:24 PM] Novie Whisper: oh yes it did
+[3:24 PM] Novie Whisper: now rez the fuggiez
+[3:24 PM] Novie Whisper: yes
+[3:24 PM] Novie Whisper: oh you did get it before ok
+[3:24 PM] Novie Whisper: cuz
+[3:24 PM] Novie Whisper: it's no transfer so you would only get 1
+[3:24 PM] secretdev: yes I did it before
+[3:24 PM] Novie Whisper: ok :0
+[3:25 PM] Novie Whisper: err :)
+[3:25 PM] Novie Whisper: only the Goobiez & Fuggiez need to have scripts inside of them the other things are just for decor
+[3:26 PM] Novie Whisper: the breeding type scripts for eating
+[3:26 PM] secretdev: okay makes sense
+[3:26 PM] Novie Whisper: also they need to have hover text that shows their stats Age, Munchiez, Delivery
+[3:26 PM] Novie Whisper: and they also need to be able to have name changes
+[3:27 PM] secretdev: okay got it

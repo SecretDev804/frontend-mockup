@@ -1,0 +1,97 @@
+Julian Ferreyra  [9:06 AM]
+Good morning @Minkka Sirvel, Happy Monday!
+
+Regarding the portal storage feature, can you please clarify following a few details to make sure it works exactly as you envision?
+
+1. Time should be pause or continue for creature aging in Portal
+
+2. Portal Feeding should be implement in both case?
+
+3. Can Creatures Die in Portal due to the starvation?
+
+4. When creatures are taken to SL inventory (not portal) and the player deletes them permanently, the creature stays "alive" forever in the database.
+
+I am going to add 30-day timeout to make the creatures with no activity for 30 days die as "abandoned"
+Or there should be no timeout? Then creatures will stay alive indefinitely (rely on portal for cleanup)
+
+5. Portal Rezzer
+How should users receive creatures back from the portal?
+New "Portal Rezzer" object (like KittyCatS dock) is required or should Use existing Mailbox?
+
+Thank you.
+11 repliesMinkka Sirvel  [10:01 AM]
+
+Time continues, they are alive in portal as if they are alive when rezzed in SL
+Yes, they are being fed in portal IF food is in portal. 
+Yes, creatures can die of starvation and old age. 
+If they delete them in SL or send to GB, or die from old age or starvation, they are deleted from Portal. If they simply pick them up and put in their inventory then they stay in Portal.  The creatures should die and/or starve just the same as if they are rezzed in world. They just dont physically stand in SL aside from first Rez or if players want to bring them back into SL, or send them back to portal. 
+Which do you think would be easier or better for system? I am fine with separate portal dock or mailbox. 
+      
+Julian Ferreyra  [10:23 AM]
+Thanks. I think separate portal dock would be better.
+
+And how does "food in portal" work?
+Playsers should buy food via web portal (L$ or GB points)?
+or should send food from SL to portal? How about the virtual food container?Minkka Sirvel  [10:39 AM]
+If this would possibly be easier, perhaps we can separate the creatures that are just living in the portal and we will call it Vorest (virtual forest) that way, the food in the Vorest is only good there virtually, no in world container, same with boosters (can be named the same yet will work in vorest). Creatures live/die/starve/breed exactly as they do in world just they live virtually unless called in SL from a dock or mailbox?  Your thoughts of what would be easiest for making are appreciated.
+Julian Ferreyra  [10:56 AM]
+Good idea! love the separation.
+
+So they will work like this?
+
+Vorest (Virtual Forest):
+  - Creatures live virtually in the web portal
+  - They age, get hungry, breed, and die - same as in SL
+  - Food and boosters are purchased/used through the web portal
+  - Players can retrieve creatures to SL via dock/mailbox whenever they want
+
+In Second Life:
+  - Creatures rezzed physically
+  - Same lifecycle rules
+  - Food containers and boosters work in-world
+
+The Separation:
+  - Vorest food = only works in Vorest (web-based)
+  - SL food = only works in SL (in-world objects)
+  - Same creature can move between both worlds
+
+This separation makes development cleaner because we don't need to sync SL inventory with the portal. Each system handles its own food/boosters independently.
+
+Quick Questions:
+  1. Can creatures be sent from SL to Vorest at any time via menu option?
+  2. For Vorest purchases (food, boosters), should these cost Great Beyond points?
+  3. Should breeding work in Vorest? (Two creatures both in Vorest can breed together?)Minkka Sirvel  [11:03 AM]
+
+Yes
+Can they cost L$ or GBP? Either one? 
+Yes only creatures in Vorest can breed together and only creatures rezzed in world can breed together. 
+Julian Ferreyra  [11:10 AM]
+I recommend using GBP rather than L$. Because SL's Linden Dollar system only works in-world through LSL scripts, so I think direct L$ payments from a website aren't possible
+Minkka Sirvel  [11:21 AM]
+Could they perhaps puchase from an in world vendor with L$ but it gives them Vbucks or something like that so they can use Lindens indirectly to feed or boost in the Vorest?  And also give them the option to use their GBP?
+Julian Ferreyra  [11:27 AM]
+So you mean we will have another currency called Vbucks for Vorest?
+It is available to purchase the Vbucks through in-world shop using L$ and players will spend the it or GBP for food/boostersMinkka Sirvel  [11:29 AM]
+Yes would this work?
+Julian Ferreyra  [11:29 AM]
+Sure, no problem. I will implement this
+[11:30 AM]We will have the SL shop link in the portal, so players can teleport to there and buy Vbucks
+
+
+Julian Ferreyra  [10:36 AM]
+And this is an another question. As you know, sl does not notify external servers when players delete objects - whether from their inventory or while rezzed in-world. When someone deletes a Goobiez, our server simply stops receiving updates. Unfortunately, this looks identical to a creature sitting safely in inventory.
+
+Without intervention, deleted creatures would remain "alive" in the portal forever, even though they no longer exist in Second Life. Over time, this creates "ghost" creatures in the system.
+
+So  I recommend implementing a 30-day inactivity timeout for creatures not in the portal:
+
+ - Creatures in the Portal: Protected and managed via web (time continues, needs feeding)
+ - Creatures rezzed in SL: Active and sending updates
+ - Creatures in SL inventory for 30+ days: Assumed deleted/abandoned → marked as "lost" → owner receives 25% Great Beyond points
+
+This gives players a 30-day window to rez their creatures or send them to the Portal for safekeeping. It also keeps the Portal clean from creatures that no longer exist.
+
+Of course, players will never delete their own creatures from the inventory in-world, but this method may be necessary to handle actions caused by mistakes or carelessness, lol (edited) 
+[10:38 AM]Please share your opinion about this issue. Thank you.
+Minkka Sirvel  [10:49 AM]
+Yes, the 30 day inactivity is perfect.
